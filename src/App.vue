@@ -21,7 +21,7 @@ const route = useRoute()
 html,
 body {
   height: 100%;
-  min-height: 100vh;
+  width: 100%;
   margin: 0;
 }
 
@@ -32,9 +32,10 @@ body {
   font-weight: 400;
   background: var(--background-color);
 }
+
 #app {
   height: 100%;
-  width: 100%;
   display: flex;
+  flex-direction: column;
 }
 </style>

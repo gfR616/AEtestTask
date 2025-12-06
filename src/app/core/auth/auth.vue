@@ -1,12 +1,16 @@
 <script lang="ts" setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 const getAuth = () => {
   console.log('auth!!')
+  router.push('/')
 }
 </script>
 
 <template>
   <div class="auth-container">
-    <form v-on:submit="getAuth" class="auth-form">
+    <form @submit="getAuth" class="auth-form">
       <div class="inputs-group">
         <input class="input" placeholder="username" type="text" />
         <input class="input" placeholder="password" type="text" />
