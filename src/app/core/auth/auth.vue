@@ -1,20 +1,62 @@
 <script lang="ts" setup>
+import { useAuthStore } from '@/stores/authStore'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
+const auth = useAuthStore()
 const router = useRouter()
-const getAuth = () => {
-  console.log('auth!!')
-  router.push('/')
+
+const username = ref('')
+const password = ref('')
+
+const usernameError = ref('')
+const passwordError = ref('')
+const authError = ref('')
+
+const submit = async (event: Event) => {
+  event.preventDefault()
+  usernameError.value = ''
+  passwordError.value = ''
+  authError.value = ''
+
+  if (!username.value.trim()) {
+    usernameError.value = 'Пожалуйста, введите логин'
+  }
+
+  if (!password.value.trim()) {
+    passwordError.value = 'Пожалуйста, введите пароль'
+  }
+
+  if (usernameError.value || passwordError.value) {
+    return
+  }
+
+  try {
+    const user = await auth.login(username.value.trim(), password.value.trim())
+    router.push('/')
+  } catch (error: any) {
+    authError.value = error.message || 'Произошла ошибка при входе'
+  }
 }
 </script>
 
 <template>
   <div class="auth-container">
-    <form @submit="getAuth" class="auth-form">
+    <form @submit="submit" class="auth-form">
       <div class="inputs-group">
-        <input class="input" placeholder="username" type="text" />
-        <input class="input" placeholder="password" type="text" />
+        <div class="input-group">
+          <input class="input" v-model="username" placeholder="username" type="text" />
+          <p v-if="usernameError" class="error-message">{{ usernameError }}</p>
+        </div>
+
+        <div class="input-group">
+          <input class="input" v-model="password" placeholder="password" type="password" />
+          <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
+        </div>
       </div>
+
+      <p v-if="authError" class="error-message">{{ authError }}</p>
+
       <div class="auth-button-container">
         <button type="submit" class="auth-button">Войти</button>
       </div>
@@ -63,5 +105,11 @@ const getAuth = () => {
   height: 29px;
   background: var(--secondary-color);
   border: none;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 4px;
 }
 </style>
