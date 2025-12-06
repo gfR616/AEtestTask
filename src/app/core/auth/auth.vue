@@ -23,19 +23,19 @@ const getAuth = () => {
 </template>
 
 <style scoped>
+.auth-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 7vh 0 0 6vw;
+}
+
 .auth-form {
   /* height: 45vh; вариант с относительным размером формы предполагает изменение размеров инпутов и кнопок, это не самое удачное решение
   width: 43vw; */
   min-width: 400px;
   background-color: var(--primary-color);
   padding: 0 0 20px 0;
-}
-
-.auth-container {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  padding: 7vh 0 0 6vw;
 }
 
 .inputs-group {

@@ -7,7 +7,9 @@ const route = useRoute()
 
 <template id="app">
   <navPanel v-if="!route.meta.hideNav" />
-  <router-view />
+  <div class="main-content-area">
+    <router-view />
+  </div>
 </template>
 
 <style>
@@ -20,7 +22,7 @@ const route = useRoute()
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   margin: 0;
 }
@@ -28,13 +30,19 @@ body {
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
-  font-style: 12px;
+  font-size: 16px;
   font-weight: 400;
   background: var(--background-color);
 }
 
 #app {
-  height: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content-area {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 }

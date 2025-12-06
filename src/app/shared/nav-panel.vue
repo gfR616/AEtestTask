@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
@@ -23,7 +23,7 @@ const handleLogout = () => {
 <style>
 .nav-panel {
   width: auto;
-  height: 10vh;
+  height: 8vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
