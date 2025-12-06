@@ -6,6 +6,6 @@
 .nav-panel {
   width: 100%;
   height: 10vh;
-  border: 1px black solid;
+  background: var(--nav-bar-color);
 }
 </style>

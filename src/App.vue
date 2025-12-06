@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
 import navPanel from './app/shared/nav-panel.vue'
+
+const route = useRoute()
 </script>
 
 <template id="app">
-  <navPanel />
+  <navPanel v-if="route.path !== '/auth'" />
   <router-view />
 </template>
 
@@ -14,6 +17,7 @@ import navPanel from './app/shared/nav-panel.vue'
   --buttons-color-primary: #d9d9d9;
   --buttons-color-secondary: #ffffff;
 }
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
