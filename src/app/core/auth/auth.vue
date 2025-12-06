@@ -6,12 +6,12 @@ import { useRouter } from 'vue-router'
 const auth = useAuthStore()
 const router = useRouter()
 
-const username = ref('')
-const password = ref('')
+const username = ref<string>('')
+const password = ref<string>('')
 
-const usernameError = ref('')
-const passwordError = ref('')
-const authError = ref('')
+const usernameError = ref<string>('')
+const passwordError = ref<string>('')
+const authError = ref<string>('')
 
 const submit = async (event: Event) => {
   event.preventDefault() // иначе она перезагрузит страницу
@@ -105,6 +105,7 @@ const submit = async (event: Event) => {
   height: 29px;
   background: var(--secondary-color);
   border: none;
+  cursor: pointer;
 }
 
 .input-wrapper {
