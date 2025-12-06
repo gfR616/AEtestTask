@@ -5,18 +5,8 @@ import { defineStore } from 'pinia'
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => {
     const storedUser = localStorage.getItem('user')
-    let user: User | null = null
-
-    if (storedUser) {
-      try {
-        user = JSON.parse(storedUser)
-      } catch {
-        user = null
-      }
-    }
-
     return {
-      user,
+      user: storedUser ? JSON.parse(storedUser) : null,
       loading: false,
       error: null,
     }
