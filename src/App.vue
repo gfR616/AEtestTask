@@ -14,16 +14,27 @@ const route = useRoute()
 :root {
   --nav-bar-color: #165996;
   --background-color: #e2e1e1;
-  --buttons-color-primary: #d9d9d9;
-  --buttons-color-secondary: #ffffff;
+  --primary-color: #d9d9d9;
+  --secondary-color: #ffffff;
+}
+
+html,
+body {
+  height: 100%;
+  min-height: 100vh;
+  margin: 0;
 }
 
 body {
-  margin: 0;
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
   font-style: 12px;
   font-weight: 400;
   background: var(--background-color);
+}
+#app {
+  height: 100%;
+  width: 100%;
+  display: flex;
 }
 </style>
