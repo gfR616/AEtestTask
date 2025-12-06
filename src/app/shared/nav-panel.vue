@@ -17,7 +17,7 @@ const handleLogout = () => {
       <span class="nav-button">Добавить заказ</span>
     </div>
     <div class="user-info">
-      <span>username</span>
+      <span>{{ authStore.user?.name }}</span>
       <button @click="handleLogout" class="exit-button">Выход</button>
     </div>
   </div>
