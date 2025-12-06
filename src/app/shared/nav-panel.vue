@@ -1,11 +1,54 @@
+<script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const handleLogout = () => {
+  router.push('/auth')
+}
+</script>
+
 <template>
-  <div class="nav-panel"></div>
+  <div class="nav-panel">
+    <div class="nav-buttons-container">
+      <span class="nav-button">Все заказы</span>
+      <span class="nav-button">Добавить заказ</span>
+    </div>
+    <div class="user-info">
+      <span>username</span>
+      <button @click="handleLogout" class="exit-button">Выход</button>
+    </div>
+  </div>
 </template>
 
 <style>
 .nav-panel {
-  width: 100%;
+  width: auto;
   height: 10vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: var(--nav-bar-color);
+  padding: 0 15px 0 15px;
+}
+
+.nav-buttons-container {
+  margin-left: 7px;
+  display: flex;
+  gap: 38px;
+}
+
+.nav-button {
+  color: var(--secondary-color);
+  cursor: pointer;
+}
+
+.user-info {
+  display: flex;
+  gap: 28px;
+}
+
+.exit-button {
+  width: 78px;
+  height: 27px;
 }
 </style>
