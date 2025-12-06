@@ -9,3 +9,11 @@ export interface AuthState {
   loading: boolean
   error: string | null
 }
+export interface Order {
+  id: number
+  name: string
+  address: string
+  date: string
+  status: string
+  comment: string
+}
