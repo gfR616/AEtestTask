@@ -31,6 +31,7 @@
 .orders-table td {
   padding: 8px 12px;
   border: 1px solid #000000;
+  font-weight: 400;
 }
 
 .orders-table th {
