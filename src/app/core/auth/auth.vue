@@ -33,9 +33,9 @@ const submit = async (event: Event) => {
 
   try {
     const user = await auth.login(username.value.trim(), password.value.trim())
-    router.push('/')
+    router.push('/orders')
   } catch (error: any) {
-    authError.value = error.message || 'Произошла ошибка при входе'
+    authError.value = error.message ?? 'Произошла ошибка при входе'
   }
 }
 </script>
@@ -76,8 +76,6 @@ const submit = async (event: Event) => {
 }
 
 .auth-form {
-  /* height: 45vh; вариант с относительным размером формы предполагает изменение размеров инпутов и кнопок, это не самое удачное решение
-  width: 43vw; */
   min-width: 400px;
   background-color: var(--primary-color);
   padding: 0 0 20px 0;
@@ -118,6 +116,8 @@ const submit = async (event: Event) => {
 .error-message {
   color: red;
   margin: 5px 0 0 0;
+  font-size: 12px;
+  margin-left: 8px;
 }
 
 .error-container {
