@@ -14,7 +14,7 @@ const passwordError = ref('')
 const authError = ref('')
 
 const submit = async (event: Event) => {
-  event.preventDefault()
+  event.preventDefault() // иначе она перезагрузит страницу
   usernameError.value = ''
   passwordError.value = ''
   authError.value = ''
@@ -44,18 +44,21 @@ const submit = async (event: Event) => {
   <div class="auth-container">
     <form @submit="submit" class="auth-form">
       <div class="inputs-group">
-        <div class="input-group">
+        <div class="input-wrapper">
           <input class="input" v-model="username" placeholder="username" type="text" />
-          <p v-if="usernameError" class="error-message">{{ usernameError }}</p>
+          <div class="error-container">
+            <p v-if="usernameError" class="error-message">{{ usernameError }}</p>
+          </div>
         </div>
 
-        <div class="input-group">
+        <div class="input-wrapper">
           <input class="input" v-model="password" placeholder="password" type="password" />
-          <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
+          <div class="error-container">
+            <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
+            <p v-if="authError" class="error-message">{{ authError }}</p>
+          </div>
         </div>
       </div>
-
-      <p v-if="authError" class="error-message">{{ authError }}</p>
 
       <div class="auth-button-container">
         <button type="submit" class="auth-button">Войти</button>
@@ -87,7 +90,6 @@ const submit = async (event: Event) => {
 }
 
 .input {
-  margin-bottom: 32px;
   width: 180px;
   height: 34px;
   border: none;
@@ -107,9 +109,18 @@ const submit = async (event: Event) => {
   border: none;
 }
 
+.input-wrapper {
+  margin-bottom: 9px;
+  display: flex;
+  flex-direction: column;
+}
+
 .error-message {
   color: red;
-  font-size: 0.9rem;
-  margin-top: 4px;
+  margin: 5px 0 0 0;
+}
+
+.error-container {
+  height: 18px;
 }
 </style>
