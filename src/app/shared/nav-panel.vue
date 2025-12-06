@@ -1,8 +1,11 @@
 <script lang="ts" setup>
+import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
 const router = useRouter()
+const authStore = useAuthStore()
 
 const handleLogout = () => {
+  authStore.logout()
   router.push('/auth')
 }
 </script>

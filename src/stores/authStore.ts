@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', {
 
       try {
         const user = await authService.login(username, password)
-        this.user = user ?? null
+        this.user = user.data[0] ?? null
         if (this.user) {
           localStorage.setItem('user', JSON.stringify(user))
         }
