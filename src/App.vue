@@ -6,7 +6,7 @@ const route = useRoute()
 </script>
 
 <template id="app">
-  <navPanel v-if="route.path !== '/auth'" />
+  <navPanel v-if="!route.meta.hideNav" />
   <router-view />
 </template>
 
