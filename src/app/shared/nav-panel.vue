@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { useAuthStore } from '@/stores/authStore'
 import { useRouter } from 'vue-router'
+import addOrderModal from '../features/add-order-modal.vue'
+import { ref } from 'vue'
+
 const router = useRouter()
 const authStore = useAuthStore()
 
@@ -8,19 +11,31 @@ const handleLogout = () => {
   authStore.logout()
   router.push('/auth')
 }
+
+const showAddOrderModal = ref(false)
+
+const openModal = () => {
+  showAddOrderModal.value = true
+}
+
+const closeModal = () => {
+  showAddOrderModal.value = false
+}
 </script>
 
 <template>
   <div class="nav-panel">
     <div class="nav-buttons-container">
-      <span class="nav-button">Все заказы</span>
-      <span class="nav-button">Добавить заказ</span>
+      <span class="nav-button" @click="closeModal">Все заказы</span>
+      <span class="nav-button" @click="openModal">Добавить заказ</span>
     </div>
     <div class="user-info">
       <span>{{ authStore.user?.name }}</span>
       <button @click="handleLogout" class="exit-button">Выход</button>
     </div>
   </div>
+
+  <addOrderModal :isVisible="showAddOrderModal" @close="closeModal" />
 </template>
 
 <style>

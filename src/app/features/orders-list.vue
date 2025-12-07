@@ -28,15 +28,12 @@
   </div>
 </template>
 
-<script setup>
-import { useAuthStore } from '@/stores/authStore'
+<script lang="ts" setup>
 import { useOrdersStore } from '@/stores/ordersStore'
 import { onMounted } from 'vue'
 
 const ordersStore = useOrdersStore()
-const authStore = useAuthStore()
 onMounted(() => {
-  // authStore.getUser()
   ordersStore.fetchOrders()
 })
 </script>
