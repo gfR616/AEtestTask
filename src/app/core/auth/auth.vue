@@ -15,6 +15,16 @@ const authError = ref<string>('')
 
 const submit = async (event: Event) => {
   event.preventDefault() // иначе она перезагрузит страницу
+  authValidation()
+  try {
+    const user = await auth.login(username.value.trim(), password.value.trim())
+    router.push('/orders')
+  } catch (error: any) {
+    authError.value = error.message ?? 'Произошла ошибка при входе'
+  }
+}
+
+const authValidation = () => {
   usernameError.value = ''
   passwordError.value = ''
   authError.value = ''
@@ -33,13 +43,6 @@ const submit = async (event: Event) => {
 
   if (usernameError.value || passwordError.value) {
     return
-  }
-
-  try {
-    const user = await auth.login(username.value.trim(), password.value.trim())
-    router.push('/orders')
-  } catch (error: any) {
-    authError.value = error.message ?? 'Произошла ошибка при входе'
   }
 }
 </script>
