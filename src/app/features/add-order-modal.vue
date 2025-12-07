@@ -1,23 +1,70 @@
 <template>
   <div class="modal-overlay" v-if="isVisible">
-    <div class="modal-content">
+    <form v-on:submit="addOrder" class="modal-content">
       <div class="header">
         <p>Добавить заказ</p>
       </div>
       <div class="inputs-group">
-        <input class="input" type="text" placeholder="Введите ваше имя" />
-        <input class="input" type="text" placeholder="Введите ваш адрес" />
-        <input class="input" type="text" placeholder="Коментарий" />
+        <div class="input-wrapper">
+          <input class="input" v-model="username" type="text" placeholder="Введите ваше имя" />
+          <div class="error-container">
+            <p v-if="usernameError" class="error-message">{{ usernameError }}</p>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <input class="input" v-model="address" type="text" placeholder="Введите ваш адрес" />
+          <div class="error-container">
+            <p v-if="addressError" class="error-message">{{ addressError }}</p>
+          </div>
+        </div>
+        <div class="input-wrapper">
+          <input class="input" v-model="comment" type="text" placeholder="Коментарий" />
+        </div>
       </div>
       <button class="add-order-button">Добавить заказ</button>
-    </div>
+    </form>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { useAuthStore } from '@/stores/authStore'
+import { useOrdersStore } from '@/stores/ordersStore'
+import { ref } from 'vue'
+
+const ordersStore = useOrdersStore()
+const authStore = useAuthStore()
+
+const username = ref<string>(`${authStore.user?.name}`)
+const address = ref<string>('')
+const comment = ref<string>('')
+
+const usernameError = ref<string>('')
+const addressError = ref<string>('')
 defineProps<{
   isVisible: boolean
 }>()
+
+const addOrder = async (event: Event) => {
+  event.preventDefault()
+  addOrderValidation()
+}
+
+const addOrderValidation = () => {
+  usernameError.value = ''
+  addressError.value = ''
+
+  if (!username.value.trim()) {
+    usernameError.value = 'Имя обязательно для заполнения'
+  }
+
+  if (!address.value.trim()) {
+    addressError.value = 'Адрес обязателен для заполнения'
+  }
+
+  if (usernameError.value || addressError.value) {
+    return
+  }
+}
 </script>
 
 <style scoped>
@@ -48,7 +95,23 @@ defineProps<{
   height: 28px;
   border: none;
   padding: 0 0 0 5px;
-  margin-bottom: 24px;
+}
+
+.input-wrapper {
+  margin-bottom: 9px;
+  display: flex;
+  flex-direction: column;
+}
+
+.error-message {
+  color: red;
+  margin: 5px 0 0 0;
+  font-size: 12px;
+  margin-left: 8px;
+}
+
+.error-container {
+  height: 18px;
 }
 
 .add-order-button {
