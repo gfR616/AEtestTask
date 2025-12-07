@@ -10,6 +10,7 @@
             <th>Дата заказа</th>
             <th>Статус</th>
             <th>Комментарий</th>
+            <th></th>
           </tr>
         </thead>
 
@@ -21,6 +22,21 @@
             <td>{{ order.date }}</td>
             <td>{{ order.status }}</td>
             <td>{{ order.comment }}</td>
+            <td class="actions-cell">
+              <div class="order-buttons-container">
+                <button title="Обновить заказ" class="order-button" @click="updateOrder(order.id)">
+                  <img src="/updateOrder.svg" alt="Обновить заказ" />
+                </button>
+                <button
+                  title="Удалить заказ"
+                  v-if="authStore.user?.role === 'ADMIN'"
+                  class="order-button"
+                  @click="deleteOrder(order.id)"
+                >
+                  <img src="/deleteOrder.svg" alt="Удалить заказ" />
+                </button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -29,10 +45,12 @@
 </template>
 
 <script lang="ts" setup>
+import { useAuthStore } from '@/stores/authStore'
 import { useOrdersStore } from '@/stores/ordersStore'
 import { onMounted } from 'vue'
 
 const ordersStore = useOrdersStore()
+const authStore = useAuthStore()
 onMounted(() => {
   ordersStore.fetchOrders()
 })
@@ -40,7 +58,7 @@ onMounted(() => {
 
 <style scoped>
 .table-container {
-  padding: 127px 72px 20px 43px;
+  padding: 43px 43px 20px 43px;
   height: 100%;
 }
 
@@ -60,5 +78,22 @@ onMounted(() => {
 .orders-table th {
   background: var(--primary-color);
   text-align: center;
+}
+
+.order-buttons-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.order-button {
+  width: 18px;
+  height: 17px;
+  border: 1px black solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 </style>
