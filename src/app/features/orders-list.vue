@@ -54,6 +54,12 @@ const authStore = useAuthStore()
 onMounted(() => {
   ordersStore.fetchOrders()
 })
+const updateOrder = (id: string) => {
+  ordersStore.getOrderById(id)
+}
+const deleteOrder = (id: string) => {
+  ordersStore.deleteOrder(id)
+}
 </script>
 
 <style scoped>

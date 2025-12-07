@@ -10,7 +10,7 @@ export interface AuthState {
   error: string | null
 }
 export interface Order {
-  id: number
+  id: string
   name: string
   address: string
   date: string

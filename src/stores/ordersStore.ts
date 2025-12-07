@@ -41,5 +41,37 @@ export const useOrdersStore = defineStore('orders', {
         this.isLoading = false
       }
     },
+
+    async getOrderById(id: string) {
+      this.isLoading = true
+      this.error = null
+      try {
+        const freshOrderData = await ordersService.getOrderById(id)
+        const index = this.orders.findIndex((order) => order.id === id)
+        if (index !== -1) {
+          this.orders[index] = freshOrderData
+        }
+      } catch (error) {
+        this.error = 'Ошибка при получении заказа: ' + (error as Error).message
+        throw error
+      } finally {
+        this.isLoading = false
+      }
+    },
+
+    async deleteOrder(id: string) {
+      this.isLoading = true
+      this.error = null
+
+      try {
+        await ordersService.deleteOrder(id)
+        this.orders = this.orders.filter((order) => order.id !== id)
+      } catch (error) {
+        this.error = 'Ошибка при удалении заказа: ' + (error as Error).message
+        throw error
+      } finally {
+        this.isLoading = false
+      }
+    },
   },
 })

@@ -11,4 +11,15 @@ export const ordersService = {
     const res = await apiClient.post<Order, any, NewOrderPayload>('/events', orderData)
     return res.data
   },
+
+  //id у нас строка, потому что JSON-сервер генерит их такими автоматом
+  async deleteOrder(id: string): Promise<void> {
+    await apiClient.delete(`/events/${id}`)
+  },
+
+  async getOrderById(id: string): Promise<Order> {
+    const res = await apiClient.get<Order>(`/events/${id}`)
+
+    return res.data
+  },
 }
