@@ -7,28 +7,27 @@ export const useAuthStore = defineStore('auth', {
     const storedUser = localStorage.getItem('user')
     return {
       user: storedUser ? JSON.parse(storedUser) : null,
-      loading: false,
+      isLoading: false,
       error: null,
     }
   },
 
   actions: {
     async login(username: string, password: string) {
-      this.loading = true
+      this.isLoading = true
       this.error = null
 
       try {
         const user = await authService.login(username, password)
-        this.user = user.data[0] ?? null
+        this.user = user[0] ?? null
         if (this.user) {
           localStorage.setItem('user', JSON.stringify(user))
         }
       } catch (e: any) {
-        this.error = e.message || 'Ошибка авторизации'
-        this.loading = false
+        this.error = e.message ?? 'Ошибка авторизации'
         throw e
       } finally {
-        this.loading = false
+        this.isLoading = false
       }
     },
 

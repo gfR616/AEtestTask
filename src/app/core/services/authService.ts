@@ -9,6 +9,6 @@ export const authService = {
     if (res.data.length === 0) {
       throw new Error('Неверный логин или пароль')
     }
-    return res
+    return res.data
   },
 }

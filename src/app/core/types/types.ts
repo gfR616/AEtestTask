@@ -6,7 +6,7 @@ export interface User {
 }
 export interface AuthState {
   user: User | null
-  loading: boolean
+  isLoading: boolean
   error: string | null
 }
 export interface Order {
@@ -16,4 +16,9 @@ export interface Order {
   date: string
   status: string
   comment: string
+}
+export interface OrdersState {
+  orders: Order[]
+  isLoading: boolean
+  error: string | null
 }
