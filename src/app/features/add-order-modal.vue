@@ -129,7 +129,7 @@ const addOrderValidation = () => {
 }
 
 .add-order-button {
-  margin: 5px 0 0 3px;
+  margin: 21px 0 0 3px;
   width: 115px;
   height: 25px;
   background: var(--primary-color);
