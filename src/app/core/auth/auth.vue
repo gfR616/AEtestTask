@@ -27,6 +27,10 @@ const submit = async (event: Event) => {
     passwordError.value = 'Пожалуйста, введите пароль'
   }
 
+  if (password.value.trim().length < 8) {
+    passwordError.value = 'Длинна пароля должна быть более 8 символов'
+  }
+
   if (usernameError.value || passwordError.value) {
     return
   }
