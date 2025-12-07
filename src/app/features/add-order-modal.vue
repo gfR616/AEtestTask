@@ -31,6 +31,7 @@ import { useAuthStore } from '@/stores/authStore'
 import { useOrdersStore } from '@/stores/ordersStore'
 import { ref, watch } from 'vue'
 import type { NewOrderPayload } from '../core/types/types'
+import { formatCustomDate } from '@/utils/tools'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
@@ -82,7 +83,7 @@ const addOrderValidation = () => {
     return
   }
 
-  const currentDate = new Date().toLocaleString('ru-RU')
+  const currentDate = formatCustomDate(new Date())
 
   const newOrderRequest: NewOrderPayload = {
     name: username.value,

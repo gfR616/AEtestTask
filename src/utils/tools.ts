@@ -12,3 +12,25 @@ export function getBaseUrl() {
 
   return trimUrl(url)
 }
+
+export function formatCustomDate(date: Date) {
+  const day = date.getDate()
+  const months = [
+    'января',
+    'февраля',
+    'марта',
+    'апреля',
+    'мая',
+    'июня',
+    'июля',
+    'августа',
+    'сентября',
+    'октября',
+    'ноября',
+    'декабря',
+  ]
+  const monthName = months[date.getMonth()]
+  const year = date.getFullYear()
+
+  return `${day} ${monthName} ${year}`
+}
