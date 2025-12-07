@@ -46,6 +46,8 @@ const props = defineProps<{
   isVisible: boolean
 }>()
 
+const emit = defineEmits(['close'])
+
 watch(
   () => props.isVisible,
   (newVal) => {
@@ -91,6 +93,7 @@ const addOrderValidation = () => {
   }
 
   ordersStore.createOrder(newOrderRequest)
+  emit('close')
 }
 </script>
 
