@@ -6,8 +6,14 @@
           <tr>
             <th>№</th>
             <th>Имя клиента</th>
-            <th>Адрес</th>
-            <th>Дата заказа</th>
+            <th class="sortable" @click="sortBy('address')">
+              Адрес
+              <span v-if="sortKey === 'address'">{{ sortOrder === 'asc' ? '▲' : '▼' }}</span>
+            </th>
+            <th class="sortable" @click="sortBy('date')">
+              Дата заказа
+              <span v-if="sortKey === 'date'">{{ sortOrder === 'asc' ? '▲' : '▼' }}</span>
+            </th>
             <th>Статус</th>
             <th>Комментарий</th>
             <th></th>
@@ -17,7 +23,7 @@
         <tbody id="orders-body">
           <tr
             :class="{ 'completed-order': order.status === 'Выполнен' }"
-            v-for="order in ordersStore.orders"
+            v-for="order in sortedOrders"
           >
             <td>{{ order.id }}</td>
             <td>{{ order.name }}</td>
@@ -63,20 +69,24 @@
 <script lang="ts" setup>
 import { useAuthStore } from '@/stores/authStore'
 import { useOrdersStore } from '@/stores/ordersStore'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import ConfirmModal from '../shared/confirm-modal.vue'
+import type { Order } from '../core/types/types'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
+
+const showConfirmModal = ref(false)
+const orderToDeleteId = ref<string | null>(null)
+const sortKey = ref<keyof Order | null>(null)
+const sortOrder = ref<'asc' | 'desc'>('asc')
+
 onMounted(() => {
   ordersStore.fetchOrders()
 })
 const updateOrder = (id: string) => {
   ordersStore.getOrderById(id)
 }
-
-const showConfirmModal = ref(false)
-const orderToDeleteId = ref<string | null>(null)
 
 const openDeleteModal = (orderId: string) => {
   orderToDeleteId.value = orderId
@@ -100,9 +110,42 @@ const handleConfirmDelete = async () => {
     }
   }
 }
+
+const sortedOrders = computed(() => {
+  const orders = [...ordersStore.orders]
+
+  if (sortKey.value) {
+    orders.sort((a, b) => {
+      const valA = a[sortKey.value!]
+      const valB = b[sortKey.value!]
+
+      let comparison = 0
+
+      if (typeof valA === 'string' && typeof valB === 'string') {
+        comparison = valA.localeCompare(valB)
+      }
+
+      return sortOrder.value === 'desc' ? comparison * -1 : comparison
+    })
+  }
+  return orders
+})
+
+const sortBy = (key: keyof Order) => {
+  if (sortKey.value === key) {
+    sortOrder.value = sortOrder.value === 'asc' ? 'desc' : 'asc'
+  } else {
+    sortKey.value = key
+    sortOrder.value = 'asc'
+  }
+}
 </script>
 
 <style scoped>
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
 .table-container {
   padding: 43px 43px 20px 43px;
   height: 100%;
