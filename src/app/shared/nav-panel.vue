@@ -53,7 +53,7 @@ const closeModal = () => {
   margin-left: 7px;
   display: flex;
   gap: 38px;
-  padding: 0 15px 0 0;
+  padding: 0 15px 0 15px;
 }
 
 .nav-button {
@@ -70,5 +70,6 @@ const closeModal = () => {
 .exit-button {
   width: 78px;
   height: 27px;
+  cursor: pointer;
 }
 </style>
