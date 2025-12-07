@@ -1,11 +1,9 @@
-import axios from 'axios'
 import type { User } from '../types/types'
-
-const API_URL = 'http://localhost:3000'
+import apiClient from '@/api/api'
 
 export const authService = {
   async login(username: string, pass: string) {
-    const res = await axios.get<User[]>(`${API_URL}/users`, {
+    const res = await apiClient.get<User[]>('/users', {
       params: { user: username, password: pass },
     })
     if (res.data.length === 0) {
