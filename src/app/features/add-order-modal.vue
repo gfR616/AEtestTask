@@ -30,6 +30,7 @@
 import { useAuthStore } from '@/stores/authStore'
 import { useOrdersStore } from '@/stores/ordersStore'
 import { ref, watch } from 'vue'
+import type { NewOrderPayload } from '../core/types/types'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
@@ -78,6 +79,18 @@ const addOrderValidation = () => {
   if (usernameError.value || addressError.value) {
     return
   }
+
+  const currentDate = new Date().toLocaleString('ru-RU')
+
+  const newOrderRequest: NewOrderPayload = {
+    name: username.value,
+    address: address.value,
+    date: currentDate,
+    status: 'Новый',
+    comment: comment.value,
+  }
+
+  ordersStore.createOrder(newOrderRequest)
 }
 </script>
 

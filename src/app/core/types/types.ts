@@ -22,3 +22,10 @@ export interface OrdersState {
   isLoading: boolean
   error: string | null
 }
+export interface NewOrderPayload {
+  name: string
+  address: string
+  date: string
+  status: 'Новый'
+  comment: string
+}

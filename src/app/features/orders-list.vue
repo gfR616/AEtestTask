@@ -53,6 +53,7 @@ onMounted(() => {
   padding: 8px 12px;
   border: 1px solid #000000;
   font-weight: 400;
+  word-break: break-all;
 }
 
 .orders-table th {
