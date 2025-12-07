@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-overlay" v-if="isVisible">
+  <div class="modal-overlay" v-if="props.isVisible">
     <form v-on:submit="addOrder" class="modal-content">
       <div class="header">
         <p>Добавить заказ</p>
@@ -29,7 +29,7 @@
 <script lang="ts" setup>
 import { useAuthStore } from '@/stores/authStore'
 import { useOrdersStore } from '@/stores/ordersStore'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
@@ -40,9 +40,23 @@ const comment = ref<string>('')
 
 const usernameError = ref<string>('')
 const addressError = ref<string>('')
-defineProps<{
+
+const props = defineProps<{
   isVisible: boolean
 }>()
+
+watch(
+  () => props.isVisible,
+  (newVal) => {
+    if (!newVal) {
+      username.value = `${authStore.user?.name || ''}`
+      address.value = ''
+      comment.value = ''
+      usernameError.value = ''
+      addressError.value = ''
+    }
+  },
+)
 
 const addOrder = async (event: Event) => {
   event.preventDefault()
