@@ -40,7 +40,8 @@ onMounted(() => {
 
 <style scoped>
 .table-container {
-  padding: 127px 72px 0 43px;
+  padding: 127px 72px 20px 43px;
+  height: 100%;
 }
 
 .orders-table {

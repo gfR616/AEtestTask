@@ -40,19 +40,20 @@ const closeModal = () => {
 
 <style>
 .nav-panel {
-  width: auto;
-  height: 8vh;
+  position: fixed;
+  width: 100%;
+  height: var(--nav-bar-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
   background: var(--nav-bar-color);
-  padding: 0 15px 0 15px;
 }
 
 .nav-buttons-container {
   margin-left: 7px;
   display: flex;
   gap: 38px;
+  padding: 0 15px 0 0;
 }
 
 .nav-button {
@@ -63,6 +64,7 @@ const closeModal = () => {
 .user-info {
   display: flex;
   gap: 28px;
+  padding-right: 15px;
 }
 
 .exit-button {

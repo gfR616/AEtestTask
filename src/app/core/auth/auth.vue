@@ -79,7 +79,7 @@ const authValidation = () => {
   display: flex;
   align-items: center;
   height: 100%;
-  padding: 7vh 0 0 6vw;
+  padding: 6vh 0 0 6vw;
 }
 
 .auth-form {
