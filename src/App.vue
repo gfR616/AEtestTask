@@ -27,6 +27,10 @@ body {
   margin: 0;
 }
 
+p {
+  margin: 0;
+}
+
 body {
   font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
