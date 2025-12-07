@@ -59,8 +59,7 @@
 
   <ConfirmModal
     :is-visible="showConfirmModal"
-    title="Подтверждение удаления"
-    :message="`Вы уверены, что хотите удалить заказ №${orderToDeleteId}? Это действие необратимо.`"
+    :message="`Вы действительно хотите удалить  заказ?`"
     @confirm="handleConfirmDelete"
     @cancel="handleCancelDelete"
   />

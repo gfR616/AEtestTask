@@ -1,18 +1,12 @@
 <template>
   <div class="modal-overlay" v-if="isVisible" @click.self="cancel">
     <div class="modal-content">
-      <div class="modal-header">
-        <h2>{{ title }}</h2>
-        <button class="close-button" @click="cancel">&times;</button>
-      </div>
-
       <div class="modal-body">
         <p>{{ message }}</p>
       </div>
-
       <div class="modal-footer">
-        <button class="btn cancel-btn" @click="cancel">Отмена</button>
-        <button class="btn confirm-btn" @click="confirm">Удалить</button>
+        <button class="btn cancel-btn" @click="cancel">Ок</button>
+        <button class="btn confirm-btn" @click="confirm">Отмена</button>
       </div>
     </div>
   </div>
@@ -21,7 +15,6 @@
 <script lang="ts" setup>
 defineProps<{
   isVisible: boolean
-  title: string
   message: string
 }>()
 const emit = defineEmits(['confirm', 'cancel'])
@@ -50,59 +43,34 @@ const cancel = () => {
 }
 
 .modal-content {
-  background: var(--secondary-color);
+  background: var(--background-color);
   padding: 20px;
-  width: 400px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.modal-header,
-.modal-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-.modal-header {
-  padding-top: 0;
-}
-
-.modal-footer {
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.btn .close-button {
-  padding: 8px 15px;
-  border: none;
-  cursor: pointer;
-}
-
-.confirm-btn {
-  background-color: red;
-  color: white;
-  width: 78px;
-  height: 27px;
-}
-
-.cancel-btn {
-  background-color: #6c757d;
-  color: white;
-  width: 78px;
-  height: 27px;
-}
-
-.close-button {
-  padding: 0;
-  width: 20px;
-  height: 20px;
-  border-radius: 0px;
-  cursor: pointer;
+  width: 335px;
+  height: 215px;
 }
 
 .modal-body {
-  margin: 10px 0 15px 0;
+  display: flex;
+  align-items: center;
+
+  height: 60%;
   padding-left: 10px;
+}
+
+.modal-footer {
+  display: flex;
+  height: 40%;
+  align-items: center;
+  justify-content: center;
+  gap: 55px;
+}
+
+.btn {
+  cursor: pointer;
+  background: var(--secondary-color);
+  color: rgb(0, 0, 0);
+  width: 78px;
+  height: 27px;
+  border: none;
 }
 </style>
