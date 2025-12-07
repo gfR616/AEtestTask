@@ -28,7 +28,8 @@ body {
   margin: 0;
 }
 
-p {
+p,
+h2 {
   margin: 0;
 }
 

@@ -31,7 +31,7 @@
                   title="Удалить заказ"
                   v-if="authStore.user?.role === 'ADMIN'"
                   class="order-button"
-                  @click="deleteOrder(order.id)"
+                  @click="openDeleteModal(order.id)"
                 >
                   <img src="/deleteOrder.svg" alt="Удалить заказ" />
                 </button>
@@ -42,12 +42,21 @@
       </table>
     </div>
   </div>
+
+  <ConfirmModal
+    :is-visible="showConfirmModal"
+    title="Подтверждение удаления"
+    :message="`Вы уверены, что хотите удалить заказ №${orderToDeleteId}? Это действие необратимо.`"
+    @confirm="handleConfirmDelete"
+    @cancel="handleCancelDelete"
+  />
 </template>
 
 <script lang="ts" setup>
 import { useAuthStore } from '@/stores/authStore'
 import { useOrdersStore } from '@/stores/ordersStore'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import ConfirmModal from '../shared/confirm-modal.vue'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
@@ -57,8 +66,31 @@ onMounted(() => {
 const updateOrder = (id: string) => {
   ordersStore.getOrderById(id)
 }
-const deleteOrder = (id: string) => {
-  ordersStore.deleteOrder(id)
+
+const showConfirmModal = ref(false)
+const orderToDeleteId = ref<string | null>(null)
+
+const openDeleteModal = (orderId: string) => {
+  orderToDeleteId.value = orderId
+  showConfirmModal.value = true
+}
+
+const handleCancelDelete = () => {
+  showConfirmModal.value = false
+  orderToDeleteId.value = null
+}
+
+const handleConfirmDelete = async () => {
+  if (orderToDeleteId.value) {
+    try {
+      await ordersStore.deleteOrder(orderToDeleteId.value)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      showConfirmModal.value = false
+      orderToDeleteId.value = null
+    }
+  }
 }
 </script>
 
