@@ -15,19 +15,19 @@ const authError = ref<string>('')
 
 const submit = async (event: Event) => {
   event.preventDefault() // иначе она перезагрузит страницу
-  authValidation()
-  try {
-    const user = await auth.login(username.value.trim(), password.value.trim())
-    router.push('/orders')
-  } catch (error: any) {
-    authError.value = error.message ?? 'Произошла ошибка при входе'
+  if (authValidation()) {
+    try {
+      await auth.login(username.value.trim(), password.value.trim())
+      router.push('/orders')
+    } catch (error: any) {
+      authError.value = error.message ?? 'Произошла ошибка при входе'
+    }
   }
 }
 
 const authValidation = () => {
   usernameError.value = ''
   passwordError.value = ''
-  authError.value = ''
 
   if (!username.value.trim()) {
     usernameError.value = 'Пожалуйста, введите логин'
@@ -37,13 +37,13 @@ const authValidation = () => {
     passwordError.value = 'Пожалуйста, введите пароль'
   }
 
-  if (password.value.trim().length < 8) {
+  if (password.value.trim() && password.value.trim().length < 8) {
     passwordError.value = 'Длинна пароля должна быть более 8 символов'
   }
 
   if (usernameError.value || passwordError.value) {
-    return
-  }
+    return false
+  } else return true
 }
 </script>
 
