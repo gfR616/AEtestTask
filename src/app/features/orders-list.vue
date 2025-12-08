@@ -64,6 +64,8 @@
     @confirm="handleConfirmDelete"
     @cancel="handleCancelDelete"
   />
+
+  <loadingIndicator v-if="ordersStore.isLoading" />
 </template>
 
 <script lang="ts" setup>
@@ -72,6 +74,7 @@ import { useOrdersStore } from '@/stores/ordersStore'
 import { computed, onMounted, ref } from 'vue'
 import ConfirmModal from '../shared/confirm-modal.vue'
 import type { Order } from '../core/types/types'
+import loadingIndicator from '../shared/loading-indicator.vue'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()

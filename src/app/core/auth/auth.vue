@@ -1,9 +1,10 @@
 <script lang="ts" setup>
+import LoadingIndicator from '@/app/shared/loading-indicator.vue'
 import { useAuthStore } from '@/stores/authStore'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const auth = useAuthStore()
+const authStore = useAuthStore()
 const router = useRouter()
 
 const username = ref<string>('')
@@ -17,7 +18,7 @@ const submit = async (event: Event) => {
   event.preventDefault() // иначе она перезагрузит страницу
   if (authValidation()) {
     try {
-      await auth.login(username.value.trim(), password.value.trim())
+      await authStore.login(username.value.trim(), password.value.trim())
       router.push('/orders')
     } catch (error: any) {
       authError.value = error.message ?? 'Произошла ошибка при входе'
@@ -72,6 +73,8 @@ const authValidation = () => {
       </div>
     </form>
   </div>
+
+  <LoadingIndicator v-if="authStore.isLoading" />
 </template>
 
 <style scoped>

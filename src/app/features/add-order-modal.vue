@@ -67,7 +67,7 @@ const addOrder = async (event: Event) => {
   addOrderValidation()
 }
 
-const addOrderValidation = () => {
+const addOrderValidation = async () => {
   usernameError.value = ''
   addressError.value = ''
 
@@ -93,8 +93,8 @@ const addOrderValidation = () => {
     comment: comment.value,
   }
 
-  ordersStore.createOrder(newOrderRequest)
-  emit('close')
+  await ordersStore.createOrder(newOrderRequest)
+  if (!ordersStore.isLoading) emit('close')
 }
 </script>
 
