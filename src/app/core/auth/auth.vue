@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import LoadingIndicator from '@/app/shared/loading-indicator.vue'
+import { useAuthValidation } from '@/composables/useAuthValidation'
 import { useAuthStore } from '@/stores/authStore'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -16,7 +17,7 @@ const authError = ref<string>('')
 
 const submit = async (event: Event) => {
   event.preventDefault() // иначе она перезагрузит страницу
-  if (authValidation()) {
+  if (useAuthValidation()) {
     try {
       await authStore.login(username.value.trim(), password.value.trim())
       router.push('/orders')
@@ -24,27 +25,6 @@ const submit = async (event: Event) => {
       authError.value = error.message ?? 'Произошла ошибка при входе'
     }
   }
-}
-
-const authValidation = () => {
-  usernameError.value = ''
-  passwordError.value = ''
-
-  if (!username.value.trim()) {
-    usernameError.value = 'Пожалуйста, введите логин'
-  }
-
-  if (!password.value.trim()) {
-    passwordError.value = 'Пожалуйста, введите пароль'
-  }
-
-  if (password.value.trim() && password.value.trim().length < 8) {
-    passwordError.value = 'Длинна пароля должна быть более 8 символов'
-  }
-
-  if (usernameError.value || passwordError.value) {
-    return false
-  } else return true
 }
 </script>
 

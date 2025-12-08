@@ -32,6 +32,7 @@ import { useOrdersStore } from '@/stores/ordersStore'
 import { ref, watch } from 'vue'
 import type { NewOrderPayload } from '../core/types/types'
 import { formatCustomDate } from '@/utils/tools'
+import { useOrderValidation } from '@/composables/useOrderValidation'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
@@ -65,6 +66,20 @@ watch(
 const addOrder = async (event: Event) => {
   event.preventDefault()
   addOrderValidation()
+  if (useOrderValidation()) {
+    const currentDate = formatCustomDate(new Date())
+
+    const newOrderRequest: NewOrderPayload = {
+      name: username.value,
+      address: address.value,
+      date: currentDate,
+      status: 'Новый',
+      comment: comment.value,
+    }
+
+    await ordersStore.createOrder(newOrderRequest)
+    if (!ordersStore.isLoading) emit('close')
+  }
 }
 
 const addOrderValidation = async () => {
@@ -80,21 +95,8 @@ const addOrderValidation = async () => {
   }
 
   if (usernameError.value || addressError.value) {
-    return
-  }
-
-  const currentDate = formatCustomDate(new Date())
-
-  const newOrderRequest: NewOrderPayload = {
-    name: username.value,
-    address: address.value,
-    date: currentDate,
-    status: 'Новый',
-    comment: comment.value,
-  }
-
-  await ordersStore.createOrder(newOrderRequest)
-  if (!ordersStore.isLoading) emit('close')
+    return false
+  } else return true
 }
 </script>
 
