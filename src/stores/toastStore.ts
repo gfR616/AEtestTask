@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import type { Toast, ToastType } from '@/app/core/types/types'
 
-const DEFAULT_LIFETIME_MS = 3000
+const DEFAULT_LIFETIME_MS = 2000
 
 export const useToastStore = defineStore('toast', {
   state: () => ({
