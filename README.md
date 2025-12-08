@@ -1,48 +1,15 @@
-# AEtest
+## Тестовый проект для компании ADVANCE ENGINEERING
 
-This template should help get you started developing with Vue 3 in Vite.
+Проект выполнен на VUE 3.5.25, Pinia 3.04 и TS 5.9.0.  
+В качестве сервера использовался JSON-server.
 
-## Recommended IDE Setup
+Делая этот проект, я ставил себе цель научиться лучше работать с Vue3 и узнать особенности и основные возможности данного фреймворка. Благодарю за эту возможность. Я старался не делать того, чего нет в ТЗ, и следовать макету 1 в 1, однако удалось это мне лишь частично. Я добавил стор для toast-messages, чтобы пользователь видел результат своих действий. Также для кнопок управления заказом был добавлен отдельный столбец таблицы, что, на мой взгляд, вполне логично. В остальном я четко следовал ТЗ.  
+В целом у меня остались только положительные впечатления, потому как Vue оказалась гораздо проще и удобнее, чем я себе представлял. В разы удобнее, нежели Angular. Уверен, что смогу и дальше совершенствоваться в ее освоении.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Инструкция по запуску
 
-## Recommended Browser Setup
-
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+1. Установите проект. npm install
+2. Запустите командой npm run dev для запуска dev-режима. При этом JSON-server должен запуститься автоматически благодаря утилите npm-run-all. Если сервер уже запущен и не дает запустить проект, используйте npm run vite или убейте процесс "node.js JavaScript Runtime".
+3. Для запуска продакшн необходимо запустить команду npm run build, а затем npm run preview.  
+   Не забудьте запустить JSON-server, если он не запущен npm run server.  
+   Однако в данный момент проект настроен так, чтобы в продакшн делать запросы на тот хост, на котором мы находимся. Чтобы избежать этого, в файле .env.production укажите VITE_API_BASE_URL=http://localhost:3000 и пересоберите билд.
