@@ -35,7 +35,7 @@
             <td class="actions-cell">
               <div class="order-buttons-container">
                 <button
-                  title="Обновить заказ"
+                  title="Обновить статус заказа"
                   v-if="order.status !== 'Выполнен'"
                   class="order-button"
                   @click="updateOrder(order.id)"

@@ -2,6 +2,9 @@ import { authService } from '@/app/core/services/authService'
 import { type AuthState } from '@/app/core/types/types'
 import { defineStore } from 'pinia'
 
+//Да, хранить данные пользователя в localStorage не безопасно)
+//Но это тестовая ситуация, в реальной мы бы хранили только куку авторизации)
+//Из-за того, что JSON-сервер не умеет работать в режиме авторизации, имеем что имеем
 export const useAuthStore = defineStore('auth', {
   state: (): AuthState => {
     const storedUser = localStorage.getItem('user')
