@@ -7,7 +7,6 @@ if (!API_BASE_URL) {
   API_BASE_URL = getBaseUrl() + '/api'
 }
 
-console.log('API_BASE_URL', API_BASE_URL)
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
 })
