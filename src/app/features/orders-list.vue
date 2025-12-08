@@ -24,6 +24,7 @@
           <tr
             :class="{ 'completed-order': order.status === 'Выполнен' }"
             v-for="order in sortedOrders"
+            :key="order.id"
           >
             <td>{{ order.id }}</td>
             <td>{{ order.name }}</td>
