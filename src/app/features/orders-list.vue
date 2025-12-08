@@ -75,6 +75,7 @@ import { computed, onMounted, ref } from 'vue'
 import ConfirmModal from '../shared/confirm-modal.vue'
 import type { Order } from '../core/types/types'
 import loadingIndicator from '../shared/loading-indicator.vue'
+import { toTimestamp } from '@/utils/tools'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
@@ -124,7 +125,9 @@ const sortedOrders = computed(() => {
 
       let comparison = 0
 
-      if (typeof valA === 'string' && typeof valB === 'string') {
+      if (sortKey.value === 'date') {
+        comparison = toTimestamp(valA as string) - toTimestamp(valB as string)
+      } else if (typeof valA === 'string' && typeof valB === 'string') {
         comparison = valA.localeCompare(valB)
       }
 

@@ -32,7 +32,6 @@ export function useAuthValidation() {
   return {
     usernameError,
     passwordError,
-
     validateAuth,
     resetAuthErrors,
   }

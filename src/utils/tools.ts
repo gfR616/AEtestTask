@@ -13,26 +13,31 @@ export function getBaseUrl() {
   return trimUrl(url)
 }
 
-export function formatCustomDate(date: Date) {
-  const day = date.getDate()
-  const months = [
-    'января',
-    'февраля',
-    'марта',
-    'апреля',
-    'мая',
-    'июня',
-    'июля',
-    'августа',
-    'сентября',
-    'октября',
-    'ноября',
-    'декабря',
-  ]
-  const monthName = months[date.getMonth()]
-  const year = date.getFullYear()
+export const monthIndexMap: Record<string, number> = {
+  января: 0,
+  февраля: 1,
+  марта: 2,
+  апреля: 3,
+  мая: 4,
+  июня: 5,
+  июля: 6,
+  августа: 7,
+  сентября: 8,
+  октября: 9,
+  ноября: 10,
+  декабря: 11,
+}
 
-  return `${day} ${monthName} ${year}`
+export const toTimestamp = (dateStr: string): number => {
+  const [dayRaw, monthRaw, yearRaw] = dateStr.split(' ')
+  const day = Number(dayRaw)
+  const year = Number(yearRaw)
+  const monthName = monthRaw as keyof typeof monthIndexMap | undefined
+  const month = monthName ? monthIndexMap[monthName] : undefined
+  if (Number.isNaN(day) || Number.isNaN(year) || month === undefined)
+    return Number.NEGATIVE_INFINITY
+
+  return new Date(year, month, day).getTime()
 }
 
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
