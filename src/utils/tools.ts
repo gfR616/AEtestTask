@@ -34,3 +34,7 @@ export function formatCustomDate(date: Date) {
 
   return `${day} ${monthName} ${year}`
 }
+
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
+export const randomDelay = () => 300 + Math.random() * 200

@@ -1,4 +1,4 @@
-import { getBaseUrl } from '@/utils/tools'
+import { getBaseUrl, randomDelay, sleep } from '@/utils/tools'
 import axios from 'axios'
 
 let API_BASE_URL = import.meta.env.VITE_API_BASE_URL
@@ -11,5 +11,16 @@ console.log('API_BASE_URL', API_BASE_URL)
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
 })
+
+//имитируем загрузку
+apiClient.interceptors.request.use(
+  async (config) => {
+    const delay = randomDelay()
+    await sleep(delay)
+
+    return config
+  },
+  (error) => Promise.reject(error),
+)
 
 export default apiClient
