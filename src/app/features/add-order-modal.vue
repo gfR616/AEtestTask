@@ -36,13 +36,9 @@ import { useOrderValidation } from '@/composables/useOrderValidation'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
+const { username, address, usernameError, addressError, validateOrder } = useOrderValidation()
 
-const username = ref<string>(`${authStore.user?.name}`)
-const address = ref<string>('')
 const comment = ref<string>('')
-
-const usernameError = ref<string>('')
-const addressError = ref<string>('')
 
 const props = defineProps<{
   isVisible: boolean
@@ -53,7 +49,7 @@ const emit = defineEmits(['close'])
 watch(
   () => props.isVisible,
   (newVal) => {
-    if (!newVal) {
+    if (newVal) {
       username.value = `${authStore.user?.name || ''}`
       address.value = ''
       comment.value = ''
@@ -65,8 +61,8 @@ watch(
 
 const addOrder = async (event: Event) => {
   event.preventDefault()
-  addOrderValidation()
-  if (useOrderValidation()) {
+
+  if (validateOrder()) {
     const currentDate = formatCustomDate(new Date())
 
     const newOrderRequest: NewOrderPayload = {
@@ -80,23 +76,6 @@ const addOrder = async (event: Event) => {
     await ordersStore.createOrder(newOrderRequest)
     if (!ordersStore.isLoading) emit('close')
   }
-}
-
-const addOrderValidation = async () => {
-  usernameError.value = ''
-  addressError.value = ''
-
-  if (!username.value.trim()) {
-    usernameError.value = 'Имя обязательно для заполнения'
-  }
-
-  if (!address.value.trim()) {
-    addressError.value = 'Адрес обязателен для заполнения'
-  }
-
-  if (usernameError.value || addressError.value) {
-    return false
-  } else return true
 }
 </script>
 

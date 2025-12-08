@@ -7,17 +7,16 @@ import { useRouter } from 'vue-router'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const { usernameError, passwordError, validateAuth, resetAuthErrors } = useAuthValidation()
 
 const username = ref<string>('')
 const password = ref<string>('')
-
-const usernameError = ref<string>('')
-const passwordError = ref<string>('')
 const authError = ref<string>('')
 
 const submit = async (event: Event) => {
   event.preventDefault() // иначе она перезагрузит страницу
-  if (useAuthValidation()) {
+  resetAuthErrors()
+  if (validateAuth(username.value, password.value)) {
     try {
       await authStore.login(username.value.trim(), password.value.trim())
       router.push('/orders')
