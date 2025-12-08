@@ -5,8 +5,8 @@
         <p>{{ message }}</p>
       </div>
       <div class="modal-footer">
-        <button class="btn cancel-btn" @click="cancel">Отмена</button>
         <button class="btn confirm-btn" @click="confirm">Ок</button>
+        <button class="btn cancel-btn" @click="cancel">Отмена</button>
       </div>
     </div>
   </div>
