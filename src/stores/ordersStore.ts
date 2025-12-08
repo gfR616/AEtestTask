@@ -54,7 +54,7 @@ export const useOrdersStore = defineStore('orders', {
         const index = this.orders.findIndex((order) => order.id === id)
         if (index !== -1) {
           this.orders[index] = freshOrderData
-          toastStore.addToast('Заказ обновлен', 'success')
+          toastStore.addToast('Данные заказа обновлены', 'success')
         }
       } catch (error) {
         this.error = 'Ошибка при получении заказа: ' + (error as Error).message
