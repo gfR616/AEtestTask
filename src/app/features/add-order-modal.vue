@@ -21,7 +21,9 @@
           <input class="input" v-model="comment" type="text" placeholder="Коментарий" />
         </div>
       </div>
-      <button class="add-order-button">Добавить заказ</button>
+      <button class="add-order-button" :disabled="isSubmitting">
+        {{ isSubmitting ? 'Сохранение...' : 'Добавить заказ' }}
+      </button>
     </form>
   </div>
 </template>
@@ -29,6 +31,7 @@
 <script lang="ts" setup>
 import { useAuthStore } from '@/stores/authStore'
 import { useOrdersStore } from '@/stores/ordersStore'
+import { useToastStore } from '@/stores/toastStore'
 import { ref, watch } from 'vue'
 import type { NewOrderPayload } from '../core/types/types'
 import { formatCustomDate } from '@/utils/tools'
@@ -36,9 +39,11 @@ import { useOrderValidation } from '@/composables/useOrderValidation'
 
 const ordersStore = useOrdersStore()
 const authStore = useAuthStore()
+const toastStore = useToastStore()
 const { username, address, usernameError, addressError, validateOrder } = useOrderValidation()
 
 const comment = ref<string>('')
+const isSubmitting = ref(false)
 
 const props = defineProps<{
   isVisible: boolean
@@ -62,19 +67,29 @@ watch(
 const addOrder = async (event: Event) => {
   event.preventDefault()
 
-  if (validateOrder()) {
-    const currentDate = formatCustomDate(new Date())
+  if (!validateOrder() || isSubmitting.value) return
 
-    const newOrderRequest: NewOrderPayload = {
-      name: username.value,
-      address: address.value,
-      date: currentDate,
-      status: 'Новый',
-      comment: comment.value,
-    }
+  const currentDate = formatCustomDate(new Date())
 
+  const newOrderRequest: NewOrderPayload = {
+    name: username.value,
+    address: address.value,
+    date: currentDate,
+    status: 'Новый',
+    comment: comment.value,
+  }
+
+  isSubmitting.value = true
+  try {
     await ordersStore.createOrder(newOrderRequest)
-    if (!ordersStore.isLoading) emit('close')
+    emit('close')
+  } catch (error) {
+    toastStore.addToast(
+      'Не удалось добавить заказ. Проверьте соединение и попробуйте снова',
+      'error',
+    )
+  } finally {
+    isSubmitting.value = false
   }
 }
 </script>
@@ -133,5 +148,10 @@ const addOrder = async (event: Event) => {
   background: var(--primary-color);
   border: none;
   cursor: pointer;
+}
+
+.add-order-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 </style>
