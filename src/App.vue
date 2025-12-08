@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import navPanel from './app/shared/nav-panel.vue'
+import toastContainer from './app/shared/toast-container.vue'
 
 const route = useRoute()
 </script>
@@ -10,6 +11,7 @@ const route = useRoute()
   <main :class="{ 'main-content': !route.meta.hideNav, 'full-content': route.meta.hideNav }">
     <router-view />
   </main>
+  <toastContainer />
 </template>
 
 <style>

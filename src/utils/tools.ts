@@ -13,7 +13,7 @@ export function getBaseUrl() {
   return trimUrl(url)
 }
 
-export const monthIndexMap: Record<string, number> = {
+const monthIndexMap: Record<string, number> = {
   января: 0,
   февраля: 1,
   марта: 2,
@@ -40,6 +40,27 @@ export const toTimestamp = (dateStr: string): number => {
   return new Date(year, month, day).getTime()
 }
 
+export function formatCustomDate(date: Date) {
+  const day = date.getDate()
+  const months = [
+    'января',
+    'февраля',
+    'марта',
+    'апреля',
+    'мая',
+    'июня',
+    'июля',
+    'августа',
+    'сентября',
+    'октября',
+    'ноября',
+    'декабря',
+  ]
+  const monthName = months[date.getMonth()]
+  const year = date.getFullYear()
+
+  return `${day} ${monthName} ${year}`
+}
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const randomDelay = () => 300 + Math.random() * 200

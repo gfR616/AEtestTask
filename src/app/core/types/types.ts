@@ -24,8 +24,8 @@ export interface NewOrderPayload {
 }
 
 export interface BaseState {
-  readonly isLoading: boolean
-  readonly error: string | null
+  isLoading: boolean
+  error: string | null
 }
 
 export interface OrdersState extends BaseState {
@@ -34,4 +34,12 @@ export interface OrdersState extends BaseState {
 
 export interface AuthState extends BaseState {
   user: User | null
+}
+
+export type ToastType = 'success' | 'error' | 'info'
+
+export interface Toast {
+  id: string
+  message: string
+  type: ToastType
 }
