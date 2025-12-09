@@ -24,16 +24,18 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div class="nav-panel">
-    <div class="nav-buttons-container">
-      <span class="nav-button" @click="closeModal">Все заказы</span>
-      <span class="nav-button" @click="openModal">Добавить заказ</span>
+  <nav v-bind="$attrs">
+    <div class="nav-panel">
+      <div class="nav-buttons-container">
+        <span class="nav-button" @click="closeModal">Все заказы</span>
+        <span class="nav-button" @click="openModal">Добавить заказ</span>
+      </div>
+      <div class="user-info">
+        <span>{{ authStore.user?.name }}</span>
+        <button @click="handleLogout" class="exit-button">Выход</button>
+      </div>
     </div>
-    <div class="user-info">
-      <span>{{ authStore.user?.name }}</span>
-      <button @click="handleLogout" class="exit-button">Выход</button>
-    </div>
-  </div>
+  </nav>
 
   <addOrderModal :isVisible="showAddOrderModal" @close="closeModal" />
 </template>
